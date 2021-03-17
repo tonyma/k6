@@ -71,6 +71,8 @@ type InitContext struct {
 	logger logrus.FieldLogger
 
 	sharedObjects *common.SharedObjects
+
+	modules map[string]modules.HasModuleInstancePerVU
 }
 
 // NewInitContext creates a new initcontext with the provided arguments
@@ -88,6 +90,7 @@ func NewInitContext(
 		compatibilityMode: compatMode,
 		logger:            logger,
 		sharedObjects:     common.NewSharedObjects(),
+		modules:           modules.GetJSModules(),
 	}
 }
 
@@ -114,6 +117,7 @@ func newBoundInitContext(base *InitContext, ctxPtr *context.Context, rt *goja.Ru
 		compatibilityMode: base.compatibilityMode,
 		logger:            base.logger,
 		sharedObjects:     base.sharedObjects,
+		modules:           base.modules,
 	}
 }
 
@@ -140,11 +144,11 @@ func (i *InitContext) Require(arg string) goja.Value {
 }
 
 func (i *InitContext) requireModule(name string) (goja.Value, error) {
-	mod := modules.Get(name)
-	if mod == nil {
+	mod, ok := i.modules[name]
+	if !ok {
 		return nil, errors.Errorf("unknown module: %s", name)
 	}
-	return i.runtime.ToValue(common.Bind(i.runtime, mod, i.ctxPtr)), nil
+	return i.runtime.ToValue(common.Bind(i.runtime, mod.NewModuleInstancePerVU(), i.ctxPtr)), nil
 }
 
 func (i *InitContext) requireFile(name string) (goja.Value, error) {

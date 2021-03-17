@@ -23,6 +23,17 @@ package modules
 import (
 	"fmt"
 	"sync"
+
+	"github.com/loadimpact/k6/js/modules/k6"
+	"github.com/loadimpact/k6/js/modules/k6/crypto"
+	"github.com/loadimpact/k6/js/modules/k6/crypto/x509"
+	"github.com/loadimpact/k6/js/modules/k6/data"
+	"github.com/loadimpact/k6/js/modules/k6/encoding"
+	"github.com/loadimpact/k6/js/modules/k6/grpc"
+	"github.com/loadimpact/k6/js/modules/k6/html"
+	"github.com/loadimpact/k6/js/modules/k6/http"
+	"github.com/loadimpact/k6/js/modules/k6/metrics"
+	"github.com/loadimpact/k6/js/modules/k6/ws"
 )
 
 //nolint:gochecknoglobals
@@ -30,17 +41,6 @@ var (
 	modules = make(map[string]interface{})
 	mx      sync.RWMutex
 )
-
-// Get returns the module registered with name.
-func Get(name string) interface{} {
-	mx.RLock()
-	defer mx.RUnlock()
-	mod := modules[name]
-	if i, ok := mod.(HasModuleInstancePerVU); ok {
-		return i.NewModuleInstancePerVU()
-	}
-	return mod
-}
 
 // HasModuleInstancePerVU should be implemented by all native Golang modules that
 // would require per-VU state. k6 will call their NewModuleInstancePerVU() methods
@@ -61,3 +61,42 @@ func Register(name string, mod interface{}) {
 	}
 	modules[name] = mod
 }
+
+// GetJSModules returns a map of all js modules
+func GetJSModules() map[string]HasModuleInstancePerVU {
+	result := map[string]HasModuleInstancePerVU{
+		// TODO add others
+		"k6":             HasModuleInstancePerVUDummyWrapper{Module: k6.New()},
+		"k6/crypto":      HasModuleInstancePerVUDummyWrapper{Module: crypto.New()},
+		"k6/crypto/x509": HasModuleInstancePerVUDummyWrapper{Module: x509.New()},
+		"k6/data":        HasModuleInstancePerVUDummyWrapper{Module: data.New()},
+		"k6/encoding":    HasModuleInstancePerVUDummyWrapper{Module: encoding.New()},
+		"k6/net/grpc":    HasModuleInstancePerVUDummyWrapper{Module: grpc.New()},
+		"k6/html":        HasModuleInstancePerVUDummyWrapper{Module: html.New()},
+		"k6/http":        http.New(),
+		"k6/metrics":     HasModuleInstancePerVUDummyWrapper{Module: metrics.New()},
+		"k6/ws":          HasModuleInstancePerVUDummyWrapper{Module: ws.New()},
+	}
+
+	for name, module := range modules {
+		if perInstance, ok := module.(HasModuleInstancePerVU); ok {
+			result[name] = perInstance
+		} else {
+			result[name] = HasModuleInstancePerVUDummyWrapper{Module: module}
+		}
+	}
+	return result
+}
+
+// HasModuleInstancePerVUDummyWrapper is a wrapper to be used around an module that doesn't support
+// HasModuleIntancePerVU, but needs to be used in places where it is required.
+type HasModuleInstancePerVUDummyWrapper struct {
+	Module interface{}
+}
+
+// NewModuleInstancePerVU implements HasModuleInstancePerVU
+func (h HasModuleInstancePerVUDummyWrapper) NewModuleInstancePerVU() interface{} {
+	return h.Module
+}
+
+var _ HasModuleInstancePerVU = HasModuleInstancePerVUDummyWrapper{}
