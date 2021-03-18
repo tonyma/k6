@@ -38,8 +38,9 @@ import (
 	"github.com/loadimpact/k6/stats/csv"
 	"github.com/loadimpact/k6/stats/datadog"
 	"github.com/loadimpact/k6/stats/influxdb"
-	"github.com/loadimpact/k6/stats/kafka"
 	"github.com/loadimpact/k6/stats/statsd"
+
+	"github.com/mstoykov/xk6-kafka-output/pkg/kafka"
 )
 
 // TODO: move this to an output sub-module after we get rid of the old collectors?
@@ -62,17 +63,7 @@ func getAllOutputConstructors() (map[string]func(output.Params) (output.Output, 
 			}
 			return newCollectorAdapter(params, influxc), nil
 		},
-		"kafka": func(params output.Params) (output.Output, error) {
-			conf, err := kafka.GetConsolidatedConfig(params.JSONConfig, params.Environment, params.ConfigArgument)
-			if err != nil {
-				return nil, err
-			}
-			kafkac, err := kafka.New(params.Logger, conf)
-			if err != nil {
-				return nil, err
-			}
-			return newCollectorAdapter(params, kafkac), nil
-		},
+		"kafka": func(p output.Params) (output.Output, error) { return kafka.New(p) },
 		"statsd": func(params output.Params) (output.Output, error) {
 			conf, err := statsd.GetConsolidatedConfig(params.JSONConfig, params.Environment)
 			if err != nil {

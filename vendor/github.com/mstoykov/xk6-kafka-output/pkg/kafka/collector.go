@@ -29,6 +29,7 @@ import (
 	"github.com/Shopify/sarama"
 	"github.com/sirupsen/logrus"
 
+	"github.com/loadimpact/k6/output"
 	jsono "github.com/loadimpact/k6/output/json"
 	"github.com/loadimpact/k6/stats"
 	"github.com/loadimpact/k6/stats/influxdb"
@@ -40,12 +41,19 @@ type Collector struct {
 	Config   Config
 
 	Samples []stats.Sample
+	done    chan struct{}
 	logger  logrus.FieldLogger
 	lock    sync.Mutex
 }
 
+var _ output.Output = new(Collector)
+
 // New creates an instance of the collector
-func New(logger logrus.FieldLogger, conf Config) (*Collector, error) {
+func New(p output.Params) (*Collector, error) {
+	conf, err := GetConsolidatedConfig(p.JSONConfig, p.Environment, p.ConfigArgument)
+	if err != nil {
+		return nil, err
+	}
 	producer, err := sarama.NewSyncProducer(conf.Brokers, nil)
 	if err != nil {
 		return nil, err
@@ -54,12 +62,14 @@ func New(logger logrus.FieldLogger, conf Config) (*Collector, error) {
 	return &Collector{
 		Producer: producer,
 		Config:   conf,
-		logger:   logger,
+		logger:   p.Logger,
+		done:     make(chan struct{}),
 	}, nil
 }
 
-// Init does nothing, it's only included to satisfy the lib.Collector interface
-func (c *Collector) Init() error { return nil }
+func (c *Collector) Description() string {
+	return "kafka: TODO"
+}
 
 // Run just blocks until the context is done
 func (c *Collector) Run(ctx context.Context) {
@@ -81,23 +91,47 @@ func (c *Collector) Run(ctx context.Context) {
 	}
 }
 
-// Collect just appends all of the samples passed to it to the internal sample slice.
+func (c *Collector) Stop() error {
+	c.done <- struct{}{}
+	<-c.done
+	return nil
+}
+
+func (c *Collector) Start() error {
+	c.logger.Debug("Kafka: starting!")
+	go func() {
+		ticker := time.NewTicker(time.Duration(c.Config.PushInterval.Duration))
+		for {
+			select {
+			case <-ticker.C:
+				c.pushMetrics()
+			case <-c.done:
+				c.pushMetrics()
+
+				err := c.Producer.Close()
+				if err != nil {
+					c.logger.WithError(err).Error("Kafka: Failed to close producer.")
+				}
+				close(c.done)
+				return
+			}
+		}
+	}()
+	return nil
+}
+
+// AddMetricSamples just appends all of the samples passed to it to the internal sample slice.
 // According to the the lib.Collector interface, it should never be called concurrently,
 // so there's no locking on purpose - that way Go's race condition detector can actually
 // detect incorrect usage.
 // Also, theoretically the collector doesn't have to actually Run() before samples start
 // being collected, it only has to be initialized.
-func (c *Collector) Collect(scs []stats.SampleContainer) {
+func (c *Collector) AddMetricSamples(scs []stats.SampleContainer) {
 	c.lock.Lock()
 	for _, sc := range scs {
 		c.Samples = append(c.Samples, sc.GetSamples()...)
 	}
 	c.lock.Unlock()
-}
-
-// Link returns a dummy string, it's only included to satisfy the lib.Collector interface
-func (c *Collector) Link() string {
-	return ""
 }
 
 func (c *Collector) formatSamples(samples stats.Samples) ([]string, error) {

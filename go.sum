@@ -123,6 +123,7 @@ github.com/labstack/echo v3.2.6+incompatible h1:28U/uXFFKBIP+VQIqq641LuYhMS7Br9Z
 github.com/labstack/echo v3.2.6+incompatible/go.mod h1:0INS7j/VjnFxD4E2wkz67b8cVwCLbBmJyDaka6Cmk1s=
 github.com/labstack/gommon v0.2.2-0.20170925052817-57409ada9da0 h1:7AIW1qc9sYYTZLamTsRKSmVvJDXkZZrIWXHDK4Gq4X0=
 github.com/labstack/gommon v0.2.2-0.20170925052817-57409ada9da0/go.mod h1:/tj9csK2iPSBvn+3NLM9e52usepMtrd5ilFYA+wQNJ4=
+github.com/loadimpact/k6 v0.31.1/go.mod h1:wROIullWNNJKvNvRV/angbz+9lXn3OcCSVHmZVTO3Mc=
 github.com/mailru/easyjson v0.7.4-0.20200812114229-8ab5ff9cd8e4 h1:O+6Lz+j8x3wl6w4uwwNs62EFM0MfLSkRAqI9LUNlcq0=
 github.com/mailru/easyjson v0.7.4-0.20200812114229-8ab5ff9cd8e4/go.mod h1:xzfreul335JAWq5oZzymOObrkdz5UnU4kGfJJLY9Nlc=
 github.com/manyminds/api2go v0.0.0-20180125085803-95be7bd0455e h1:Jg9dDZCJYqtv9GHQ34yDBFgEJLl4Hi4VEkKUyzHXCV8=
@@ -135,6 +136,8 @@ github.com/mccutchen/go-httpbin v1.1.2-0.20190116014521-c5cb2f4802fa h1:lx8ZnNPw
 github.com/mccutchen/go-httpbin v1.1.2-0.20190116014521-c5cb2f4802fa/go.mod h1:fhpOYavp5g2K74XDl/ao2y4KvhqVtKlkg1e+0UaQv7I=
 github.com/mitchellh/mapstructure v0.0.0-20180220230111-00c29f56e238 h1:+MZW2uvHgN8kYvksEN3f7eFL2wpzk0GxmlFsMybWc7E=
 github.com/mitchellh/mapstructure v0.0.0-20180220230111-00c29f56e238/go.mod h1:FVVH3fgwuzCH5S8UJGiWEs2h04kUh9fWfEaFds41c1Y=
+github.com/mstoykov/xk6-kafka-output v0.0.0-20210318151243-3cda7bd77727 h1:japHRvc2Lpv7548rAEhe+Yc7q0JhpliJ9DE8eTzbizw=
+github.com/mstoykov/xk6-kafka-output v0.0.0-20210318151243-3cda7bd77727/go.mod h1:wiA9U/JdhJfdsUcPab60aTbvc81KxlzspdIGHpkMdSs=
 github.com/nishanths/predeclared v0.0.0-20200524104333-86fad755b4d3/go.mod h1:nt3d53pc1VYcphSCIaYAJtnPYnr3Zyn8fMq2wvPGPso=
 github.com/nu7hatch/gouuid v0.0.0-20131221200532-179d4d0c4d8d h1:VhgPp6v9qf9Agr/56bj7Y/xa04UccTW04VP0Qed4vnQ=
 github.com/nu7hatch/gouuid v0.0.0-20131221200532-179d4d0c4d8d/go.mod h1:YUTz3bUH2ZwIWBy3CJBeOBEugqcmXREj14T+iG/4k4U=
