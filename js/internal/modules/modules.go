@@ -89,7 +89,7 @@ func GetJSModules() map[string]HasModuleInstancePerVU {
 }
 
 // HasModuleInstancePerVUDummyWrapper is a wrapper to be used around an module that doesn't support
-// HasModuleIntancePerVU, but needs to be used in places where it is required.
+// HasModuleInstancePerVU, but needs to be used in places where it is required.
 type HasModuleInstancePerVUDummyWrapper struct {
 	Module interface{}
 }
