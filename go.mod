@@ -62,8 +62,8 @@ require (
 	github.com/spf13/cobra v0.0.4-0.20180629152535-a114f312e075
 	github.com/spf13/pflag v1.0.1
 	github.com/stretchr/testify v1.2.2
-	github.com/tidwall/gjson v1.6.1
-	github.com/tidwall/pretty v1.0.2
+	github.com/tidwall/gjson v1.9.3
+	github.com/tidwall/pretty v1.2.0
 	github.com/ugorji/go v1.1.7 // indirect
 	github.com/urfave/negroni v0.3.1-0.20180130044549-22c5532ea862
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
