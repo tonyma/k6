@@ -249,7 +249,7 @@ github.com/valyala/fasttemplate
 # github.com/zyedidia/highlight v0.0.0-20170330143449-201131ce5cf5
 ## explicit
 github.com/zyedidia/highlight
-# golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
+# golang.org/x/crypto v0.0.0-20210921155107-089bfa567519
 ## explicit
 golang.org/x/crypto/acme
 golang.org/x/crypto/acme/autocert
@@ -257,7 +257,7 @@ golang.org/x/crypto/md4
 golang.org/x/crypto/ocsp
 golang.org/x/crypto/ripemd160
 golang.org/x/crypto/ssh/terminal
-# golang.org/x/net v0.0.0-20201008223702-a5fa9d4b7c91
+# golang.org/x/net v0.7.0
 ## explicit
 golang.org/x/net/context
 golang.org/x/net/html
@@ -268,12 +268,14 @@ golang.org/x/net/http2/hpack
 golang.org/x/net/idna
 golang.org/x/net/internal/timeseries
 golang.org/x/net/trace
-# golang.org/x/sys v0.0.0-20200930185726-fdedc70b468f
-## explicit
+# golang.org/x/sys v0.5.0
 golang.org/x/sys/internal/unsafeheader
+golang.org/x/sys/plan9
 golang.org/x/sys/unix
 golang.org/x/sys/windows
-# golang.org/x/text v0.3.3
+# golang.org/x/term v0.5.0
+golang.org/x/term
+# golang.org/x/text v0.7.0
 ## explicit
 golang.org/x/text/cases
 golang.org/x/text/collate
