@@ -22,12 +22,10 @@ require (
 	github.com/fatih/color v1.5.0
 	github.com/gedex/inflector v0.0.0-20170307190818-16278e9db813 // indirect
 	github.com/ghodss/yaml v1.0.0 // indirect
-	github.com/gin-contrib/sse v0.0.0-20170109093832-22d885f9ecc7 // indirect
-	github.com/gin-gonic/gin v1.1.5-0.20170702092826-d459835d2b07 // indirect
+	github.com/gin-gonic/gin v1.9.0 // indirect
 	github.com/go-sourcemap/sourcemap v2.1.3+incompatible // indirect
-	github.com/golang/protobuf v1.4.2
+	github.com/golang/protobuf v1.5.0
 	github.com/golang/snappy v0.0.0-20170215233205-553a64147049 // indirect
-	github.com/google/go-cmp v0.5.1 // indirect
 	github.com/gorilla/context v0.0.0-20160226214623-1ea25387ff6f // indirect
 	github.com/gorilla/mux v1.6.1 // indirect
 	github.com/gorilla/websocket v1.4.2
@@ -45,7 +43,7 @@ require (
 	github.com/mailru/easyjson v0.7.4-0.20200812114229-8ab5ff9cd8e4
 	github.com/manyminds/api2go v0.0.0-20180125085803-95be7bd0455e
 	github.com/mattn/go-colorable v0.0.9
-	github.com/mattn/go-isatty v0.0.4
+	github.com/mattn/go-isatty v0.0.17
 	github.com/mccutchen/go-httpbin v1.1.2-0.20190116014521-c5cb2f4802fa
 	github.com/mitchellh/mapstructure v0.0.0-20180220230111-00c29f56e238
 	github.com/nu7hatch/gouuid v0.0.0-20131221200532-179d4d0c4d8d
@@ -61,25 +59,21 @@ require (
 	github.com/spf13/afero v1.1.1
 	github.com/spf13/cobra v0.0.4-0.20180629152535-a114f312e075
 	github.com/spf13/pflag v1.0.1
-	github.com/stretchr/testify v1.2.2
+	github.com/stretchr/testify v1.8.1
 	github.com/tidwall/gjson v1.6.1
 	github.com/tidwall/pretty v1.0.2
-	github.com/ugorji/go v1.1.7 // indirect
 	github.com/urfave/negroni v0.3.1-0.20180130044549-22c5532ea862
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v0.0.0-20170224212429-dcecefd839c4 // indirect
 	github.com/zyedidia/highlight v0.0.0-20170330143449-201131ce5cf5
-	golang.org/x/crypto v0.0.0-20200622213623-75b288015ac9
-	golang.org/x/net v0.0.0-20201008223702-a5fa9d4b7c91
-	golang.org/x/sys v0.0.0-20200930185726-fdedc70b468f // indirect
-	golang.org/x/text v0.3.3
+	golang.org/x/crypto v0.5.0
+	golang.org/x/net v0.7.0
+	golang.org/x/text v0.7.0
 	golang.org/x/time v0.0.0-20170927054726-6dc17368e09b
 	golang.org/x/xerrors v0.0.0-20200804184101-5ec99f83aff1 // indirect
 	google.golang.org/genproto v0.0.0-20200903010400-9bfcb5116336 // indirect
 	google.golang.org/grpc v1.31.1
-	google.golang.org/protobuf v1.24.0
-	gopkg.in/go-playground/assert.v1 v1.2.1 // indirect
-	gopkg.in/go-playground/validator.v8 v8.18.2 // indirect
+	google.golang.org/protobuf v1.28.1
 	gopkg.in/guregu/null.v2 v2.1.2 // indirect
 	gopkg.in/guregu/null.v3 v3.3.0
 	gopkg.in/yaml.v2 v2.3.0
